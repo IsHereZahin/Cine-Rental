@@ -1,13 +1,16 @@
 import { useContext } from "react";
+import moon from "../../assets/imgs/icons/moon.svg";
 import sun from "../../assets/imgs/icons/sun.svg";
 import logo from "../../assets/imgs/logo.svg";
 import ring from "../../assets/imgs/ring.svg";
 import cart from "../../assets/imgs/shopping-cart.svg";
-import { MovieContext } from "../../contexts/index";
+import { MovieContext, ThemeContext } from "../../contexts/index";
 
 export default function Header({ onClickCart }) {
     const { cartData } = useContext(MovieContext);
-    console.log(cartData);
+    const { darkMode, setDarkMode } = useContext(ThemeContext);
+    // console.log(cartData);
+
     return (
         <header>
             <nav className="container flex items-center justify-between space-x-10 py-6">
@@ -22,9 +25,13 @@ export default function Header({ onClickCart }) {
                         </a>
                     </li>
                     <li>
-                        <a className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block" href="#">
-                            <img src={sun} width="24" height="24" alt="" />
-                        </a>
+                        <button
+                            onClick={() => setDarkMode(!darkMode)}
+                            className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block"
+                            aria-label="Toggle Dark Mode"
+                        >
+                            <img src={darkMode ? moon : sun} width="24" height="24" alt={darkMode ? "Moon icon" : "Sun icon"} />
+                        </button>
                     </li>
                     <li>
                         <a

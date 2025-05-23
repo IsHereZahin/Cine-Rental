@@ -66,8 +66,8 @@ export default function CartDetails({ onClose }) {
                     <div className="flex items-center justify-end gap-2">
                         <a
                             className={`rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-sm ${cartData.length < 1
-                                    ? "bg-gray-400 cursor-not-allowed"
-                                    : "bg-primary text-[#171923]"
+                                ? "bg-gray-400 cursor-not-allowed"
+                                : "bg-primary text-[#171923]"
                                 }`}
                             disabled={cartData.length < 1}
                             onClick={handleCheckout}

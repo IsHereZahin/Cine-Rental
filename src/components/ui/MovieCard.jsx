@@ -7,7 +7,7 @@ import Rating from "./Rating";
 export default function MovieCard({ movie }) {
     const [showModal, setShowModal] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(null);
-    const {cartData, setCartData} = useContext(MovieContext);
+    const { cartData, setCartData } = useContext(MovieContext);
 
     function handleModalClose() {
         setSelectedMovie(null);
@@ -51,12 +51,20 @@ export default function MovieCard({ movie }) {
                             <Rating value={movie.rating} />
                         </div>
                         <button
-                            className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
+                            className={`rounded-lg py-2 px-5 flex items-center justify-center gap-2 font-semibold text-sm
+                                ${cartData.find((item) => item.id === movie.id)
+                                    ? "disabled"
+                                    : "bg-primary text-[#171923] hover:bg-primary-dark"
+                                }`}
                             onClick={(e) => handleAddToCart(e, movie)}
+                            disabled={!!cartData.find((item) => item.id === movie.id)}
                         >
                             <img src="./assets/tag.svg" alt="" />
-                            <span>${movie.price} | Add to Cart</span>
+                            <span>
+                                ${movie.price} | {cartData.find((item) => item.id === movie.id) ? "Already Added" : "Add"} to Cart
+                            </span>
                         </button>
+
                     </figcaption>
                 </div>
             </figure>

@@ -1152,3 +1152,12 @@ video {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
+
+.dark {
+    @apply bg-[#171923] text-white
+}
+
+
+.disabled {
+    @apply bg-gray-400 text-gray-700 cursor-not-allowed;
+}
