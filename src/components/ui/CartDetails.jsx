@@ -5,11 +5,16 @@ import { MovieContext } from "../../contexts/index";
 import { getImgUrl } from "../../utils/cine-utility";
 
 export default function CartDetails({ onClose }) {
-    const { cartData, setCartData } = useContext(MovieContext);
+    const { state, dispatch } = useContext(MovieContext);
 
-    function handleRemoveFromCart(e, movieId) {
+    function handleRemoveFromCart(e, movie) {
         e.stopPropagation();
-        setCartData(cartData.filter((movie) => movie.id !== movieId));
+        dispatch({
+            type: "removeFromCart",
+            payload: {
+                ...movie
+            }
+        });
     }
 
     function handleCheckout() {
@@ -23,16 +28,16 @@ export default function CartDetails({ onClose }) {
                     className="bg-white shadow-md dark:bg-[#12141D] rounded-2xl overflow-hidden p-5 md:p-9"
                 >
                     <h2 className="text-2xl lg:text-[30px] mb-10 font-bold">Your Carts
-                        <span className="text-primary"> ({cartData.length})</span>
+                        <span className="text-primary"> ({state.cartData.length})</span>
                     </h2>
                     <div
                         className="space-y-8 lg:space-y-12 max-h-[450px] overflow-auto mb-10 lg:mb-14"
                     >
                         {
-                            cartData.length < 1 ? (
+                            state.cartData.length < 1 ? (
                                 <p className="text-center text-gray-500">Your cart is empty.</p>
                             ) : (
-                                cartData.map((movie) => (
+                                state.cartData.map((movie) => (
                                     <div
                                         key={movie.id}
                                         className="grid grid-cols-[1fr_auto] gap-4 border-b border-black/10 pb-4"
@@ -51,7 +56,7 @@ export default function CartDetails({ onClose }) {
                                         </div>
                                         <div className="flex justify-between gap-4 items-center">
                                             <button
-                                                onClick={(e) => handleRemoveFromCart(e, movie.id)}
+                                                onClick={(e) => handleRemoveFromCart(e, movie)}
                                                 className="bg-[#D42967] rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-white"
                                             >
                                                 <img src={deleteIcon} className="w-5 h-5" alt="delete" />
@@ -65,11 +70,11 @@ export default function CartDetails({ onClose }) {
                     </div>
                     <div className="flex items-center justify-end gap-2">
                         <a
-                            className={`rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-sm ${cartData.length < 1
+                            className={`rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-sm ${state.cartData.length < 1
                                 ? "bg-gray-400 cursor-not-allowed"
                                 : "bg-primary text-[#171923]"
                                 }`}
-                            disabled={cartData.length < 1}
+                            disabled={state.cartData.length < 1}
                             onClick={handleCheckout}
                             href="#"
                         >

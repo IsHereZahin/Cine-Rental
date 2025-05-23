@@ -1,7 +1,9 @@
+import { useContext } from "react";
+import { MovieContext } from "../../contexts/index";
 import { getImgUrl } from "../../utils/cine-utility";
 
 export default function MovieDetailsModal({ movie, onClose, onAddToCart }) {
-
+    const { state } = useContext(MovieContext);
 
     return (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center">
@@ -21,14 +23,20 @@ export default function MovieDetailsModal({ movie, onClose, onAddToCart }) {
                         </div>
                         <p className="text-sm lg:text-base mb-8 lg:mb-16">{movie.description}</p>
                         <div className="grid lg:grid-cols-2 gap-2">
-                            <a
-                                className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
-                                href="#"
+                            <button
+                                className={`rounded-lg py-2 px-5 flex items-center justify-center gap-2 font-semibold text-sm
+                                ${state.cartData.find((item) => item.id === movie.id)
+                                        ? "disabled"
+                                        : "bg-primary text-[#171923] hover:bg-primary-dark"
+                                    }`}
                                 onClick={(e) => onAddToCart(e, movie)}
+                                disabled={!!state.cartData.find((item) => item.id === movie.id)}
                             >
                                 <img src="./assets/tag.svg" alt="" />
-                                <span>${movie.price} | Add to Cart</span>
-                            </a>
+                                <span>
+                                    ${movie.price} | {state.cartData.find((item) => item.id === movie.id) ? "Already Added" : "Add"} to Cart
+                                </span>
+                            </button>
                             <a
                                 className="border border-[#74766F] rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#6F6F6F] dark:text-gray-200 font-semibold text-sm"
                                 href="#"

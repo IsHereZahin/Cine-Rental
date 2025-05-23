@@ -7,7 +7,7 @@ import Rating from "./Rating";
 export default function MovieCard({ movie }) {
     const [showModal, setShowModal] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(null);
-    const { cartData, setCartData } = useContext(MovieContext);
+    const { state, dispatch } = useContext(MovieContext);
 
     function handleModalClose() {
         setSelectedMovie(null);
@@ -21,14 +21,12 @@ export default function MovieCard({ movie }) {
 
     function handleAddToCart(e, movie) {
         e.stopPropagation();
-        const movieExists = cartData.find((item) => {
-            return item.id === movie.id
+        dispatch({
+            type: "addToCart",
+            payload: {
+                ...movie
+            }
         });
-        if (movieExists) {
-            return console.log(`${movie.title} already exists in cart`);
-        }
-        setCartData([...cartData, movie]);
-        console.log(`Added ${movie.title} to cart`);
     }
 
     return (
@@ -52,16 +50,16 @@ export default function MovieCard({ movie }) {
                         </div>
                         <button
                             className={`rounded-lg py-2 px-5 flex items-center justify-center gap-2 font-semibold text-sm
-                                ${cartData.find((item) => item.id === movie.id)
+                                ${state.cartData.find((item) => item.id === movie.id)
                                     ? "disabled"
                                     : "bg-primary text-[#171923] hover:bg-primary-dark"
                                 }`}
                             onClick={(e) => handleAddToCart(e, movie)}
-                            disabled={!!cartData.find((item) => item.id === movie.id)}
+                            disabled={!!state.cartData.find((item) => item.id === movie.id)}
                         >
                             <img src="./assets/tag.svg" alt="" />
                             <span>
-                                ${movie.price} | {cartData.find((item) => item.id === movie.id) ? "Already Added" : "Add"} to Cart
+                                ${movie.price} | {state.cartData.find((item) => item.id === movie.id) ? "Already Added" : "Add"} to Cart
                             </span>
                         </button>
 

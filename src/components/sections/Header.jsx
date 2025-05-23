@@ -7,9 +7,9 @@ import cart from "../../assets/imgs/shopping-cart.svg";
 import { MovieContext, ThemeContext } from "../../contexts/index";
 
 export default function Header({ onClickCart }) {
-    const { cartData } = useContext(MovieContext);
+    const { state } = useContext(MovieContext);
     const { darkMode, setDarkMode } = useContext(ThemeContext);
-    // console.log(cartData);
+    console.log(state.cartData);
 
     return (
         <header>
@@ -41,9 +41,9 @@ export default function Header({ onClickCart }) {
                         >
                             <img src={cart} width="24" height="24" alt="Cart" />
 
-                            {cartData.length > 0 && (
+                            {state.cartData.length > 0 && (
                                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                                    {cartData.length}
+                                    {state.cartData.length}
                                 </span>
                             )}
                         </a>
