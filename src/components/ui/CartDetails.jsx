@@ -3,6 +3,7 @@ import deleteIcon from "../../assets/imgs/delete.svg";
 import checkout from "../../assets/imgs/icons/checkout.svg";
 import { MovieContext } from "../../contexts/index";
 import { getImgUrl } from "../../utils/cine-utility";
+import { toast } from 'react-toastify';
 
 export default function CartDetails({ onClose }) {
     const { state, dispatch } = useContext(MovieContext);
@@ -15,10 +16,29 @@ export default function CartDetails({ onClose }) {
                 ...movie
             }
         });
+        toast.success(`${movie.title} removed from cart`, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
     }
 
     function handleCheckout() {
-        console.log("Checkout feature is not implemented yet.");
+        toast.warning("Checkout feature is not implemented yet.", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        })
     }
 
     return (

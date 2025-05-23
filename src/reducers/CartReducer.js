@@ -5,22 +5,12 @@ const initialState = {
 const CartReducer = (state, action) => {
     switch (action.type) {
         case "addToCart": {
-            const exists = state.cartData.some(
-                (item) => item.id === action.payload.id
-            );
-            if (exists) {
-                console.log(`${action.payload.title} already exists in cart`);
-                return state;
-            }
-
-            console.log(`Added ${action.payload.title} to cart`);
             return {
                 ...state,
                 cartData: [...state.cartData, action.payload],
             };
         }
         case "removeFromCart":
-            console.log(`Removed ${action.payload.title} from cart`);
             return {
                 ...state,
                 cartData: state.cartData.filter(
@@ -33,3 +23,4 @@ const CartReducer = (state, action) => {
 };
 
 export { CartReducer, initialState };
+

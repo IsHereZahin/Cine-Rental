@@ -9,12 +9,12 @@ import { MovieContext, ThemeContext } from "../../contexts/index";
 export default function Header({ onClickCart }) {
     const { state } = useContext(MovieContext);
     const { darkMode, setDarkMode } = useContext(ThemeContext);
-    console.log(state.cartData);
+    // console.log(state.cartData);
 
     return (
         <header>
             <nav className="container flex items-center justify-between space-x-10 py-6">
-                <a href="index.html">
+                <a href="#">
                     <img src={logo} width="139" height="26" alt="" />
                 </a>
 

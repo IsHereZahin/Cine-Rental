@@ -3,6 +3,7 @@ import { MovieContext } from "../../contexts/index";
 import { getImgUrl } from "../../utils/cine-utility";
 import MovieDetailsModal from "./MovieDetailsModal";
 import Rating from "./Rating";
+import { toast } from 'react-toastify';
 
 export default function MovieCard({ movie }) {
     const [showModal, setShowModal] = useState(false);
@@ -21,12 +22,38 @@ export default function MovieCard({ movie }) {
 
     function handleAddToCart(e, movie) {
         e.stopPropagation();
-        dispatch({
-            type: "addToCart",
-            payload: {
-                ...movie
-            }
+        const movieExists = state.cartData.find((item) => {
+            return item.id === movie.id
         });
+        if (movieExists) {
+            toast.warning(`${movie.title} already exists in cart`, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        } else {
+            dispatch({
+                type: "addToCart",
+                payload: {
+                    ...movie
+                }
+            });
+            toast.success(`${movie.title} added to cart`, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
     }
 
     return (
